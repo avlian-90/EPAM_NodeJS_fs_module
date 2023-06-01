@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "name": "homework5_fs_module",
+  "version": "1.0.0",
+  "description": "Working with file system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Liana Avagyan",
+  "license": "ISC"
+}
