@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 
-function findDeepestDirectory(absolutePath) {
-    fs.readdir(absolutePath, (err, files) => {
+function findDeepestDirectory(directory) {
+    fs.readdir(directory, (err, files) => {
         const foldersList = [];
         files.forEach((file) => {
             const stat = fs.statSync(file);
