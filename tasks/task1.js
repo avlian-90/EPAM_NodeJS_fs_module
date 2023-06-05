@@ -1,5 +1,6 @@
 import os from "os";
 import fs from "fs";
+import path from "path";
 
 const userName = os.userInfo().username;
 
@@ -11,9 +12,9 @@ process.on("SIGINT", () => {
 });
 
 process.stdin.on("data", (data) => {
-    const command = data.toString().trim();
+    const command1 = data.toString().trim();
 
-    switch (command) {
+    switch (command1) {
 
         case ".exit":
             console.log(`Thank you ${userName}, goodbye!`);
@@ -72,32 +73,44 @@ process.stdin.on("data", (data) => {
                 })
             })
             break;
-
-        default: 
-            console.log("Invalid input");
     };
 
-    const commandArr = command.split(" ");
+    const commandArr = command1.split(" ");
+    const command2 = commandArr[0];
 
-    if (commandArr[0] === "add") {
-        fs.writeFile(commandArr[1], "", () => {
-            console.log("File is created!")
-        })
-    } else if (commandArr[0] === "rn") {
-        fs.rename(commandArr[1], commandArr[2], () => {
-            console.log("File is renamed!");
-        })
-    } else if (commandArr[0] === "cp") {
-        fs.copyFile(commandArr[1], commandArr[2], () => {
-            console.log("File is copied!");
-        })
-    } else if (commandArr[0] === "mv") {
+    switch (command2) {
 
-    } else if (commandArr[0] === "rm") {
-        fs.unlink(commandArr[1], () => {
-            console.log("File is removed!");
-        })
+        case "add":
+            fs.writeFile(commandArr[1], "", () => {
+                console.log("File is created!")
+            });
+            break;
+
+        case "rn":
+            fs.rename(commandArr[1], commandArr[2], () => {
+                console.log("File is renamed!");
+            });
+            break;
+
+        case "cp":
+            const copiedFilePath = path.join(commandArr[2], commandArr[1]);
+            fs.cp(commandArr[1], copiedFilePath, () => {
+                console.log("File is copied!");
+            });
+            break;
+    
+        case "mv": 
+            const movedFilePath = path.join(commandArr[2], commandArr[1]);
+            fs.rename(commandArr[1], movedFilePath, () => {
+                console.log("File is moved!");
+            });
+            break;
+
+        case "rm":
+            fs.unlink(commandArr[1], () => {
+                console.log("File is removed!");
+            })
+            break;
     }
-    console.log(commandArr);
 });
 
